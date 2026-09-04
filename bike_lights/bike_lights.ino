@@ -7,9 +7,9 @@
 #define MIDDLE_BUTTON_PIN 7
 #define RIGHT_BUTTON_PIN 8
 
-#define DEBOUNCE_WINDOW_MS = 100 // button presses less than this far apart are thrown out
+#define DEBOUNCE_WINDOW_MS 100 // button presses less than this far apart are thrown out
 
-#define NUM_PATTERNS = 6
+#define NUM_PATTERNS 6
 // enum to let us refer to patterns by names instead of numbers
 typedef enum {
   AllOff = 0,
@@ -44,7 +44,7 @@ void loop() {
   // this loop has no delays in it. It runs as fast as possible, so as not to miss any inputs.
 
   // input section: update brightness, read button, do debounce logic
-  uint16_t brightness = analogRead(POT_PIN)/1023*255;
+  uint16_t brightness = analogRead(POT_PIN)*255/1024; // multiply before division
   uint8_t cycleButtonState = digitalRead(MIDDLE_BUTTON_PIN);
   if (cycleButtonState == HIGH && cycleButtonLastState == LOW) {
     // rising edge - button was just pressed
@@ -52,7 +52,7 @@ void loop() {
     if (millis() > lastButtonPressTime + DEBOUNCE_WINDOW_MS) {
       lastButtonPressTime = millis();
       // enums are constants, so this is just a number I can increment
-      currentPattern++;
+      currentPattern = currentPattern + 1;
       if (currentPattern >= NUM_PATTERNS){
         // wrap around if we go past the end of the list
         currentPattern = 0;
@@ -71,6 +71,12 @@ void loop() {
   if (digitalRead(RIGHT_BUTTON_PIN) == HIGH) {
     currentPattern = RightBlinker;
   }
+
+  // status update!
+  Serial.print("Current pattern: #");
+  Serial.print(currentPattern);
+  Serial.print(", brightness: ");
+  Serial.println(brightness);
 
   // output/pattern section: logic for each pattern
   // no delays allowed here. Instead of delays, figure out how long your entire pattern is,
@@ -106,6 +112,6 @@ void loop() {
   } else if (currentPattern == Bouncing) {
     
   } else {
-    Serial.println("ERROR - we haven't handled a pattern - this should be unreachable")
+    Serial.println("ERROR - we haven't handled a pattern - this should be unreachable");
   }
 }
