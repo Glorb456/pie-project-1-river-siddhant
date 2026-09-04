@@ -82,11 +82,50 @@ void loop() {
   // no delays allowed here. Instead of delays, figure out how long your entire pattern is,
   // and do something like `uint16_t patternElapsedMs = (millis()-patternStartTime) % PATTERN_LENGTH_MS;`
   if (currentPattern == AllOff) {
+    pinMode(LEFT_LED_PIN, LOW);
+    pinMode(RIGHT_LED_PIN, LOW);
+    pinMode(MIDDLE_LED_PIN, LOW);
 
   } else if (currentPattern == AllOn) {
+    pinMode(LEFT_LED_PIN, HIGH);
+    pinMode(RIGHT_LED_PIN, HIGH);
+    pinMode(MIDDLE_LED_PIN, HIGH);
+
+    int16_t patternElapsedMs = (millis()-patternStartTime) % 3000;
 
   } else if (currentPattern == AllBlinking) {
-        
+
+      if (patternElapsedMs <= 500 && patternElapsedMs >= 0){
+          pinMode(LEFT_LED_PIN, HIGH);
+          pinMode(RIGHT_LED_PIN, HIGH);
+          pinMode(MIDDLE_LED_PIN, HIGH);
+        }
+      else if (patternElapsedMs <= 1000 && patternElapsedMs > 500){
+        pinMode(LEFT_LED_PIN, LOW);
+        pinMode(RIGHT_LED_PIN, LOW);
+        pinMode(MIDDLE_LED_PIN, LOW);
+      }
+      else if (patternElapsedMs <= 1500 && patternElapsedMs > 1000) {
+        pinMode(LEFT_LED_PIN, HIGH);
+        pinMode(RIGHT_LED_PIN, HIGH);
+        pinMode(MIDDLE_LED_PIN, HIGH);
+       }
+      else if (patternElapsedMs <= 2000 && patternElapsedMs > 1500) {
+        pinMode(LEFT_LED_PIN, LOW);
+        pinMode(RIGHT_LED_PIN, LOW);
+        pinMode(MIDDLE_LED_PIN, LOW);
+       }
+      else if (patternElapsedMs <= 2500 && patternElapsedMs > 2000){
+        pinMode(LEFT_LED_PIN, HIGH);
+        pinMode(RIGHT_LED_PIN, HIGH);
+        pinMode(MIDDLE_LED_PIN, HIGH);
+       }
+      else (patternElapsedMs <= 3000 && patternElapsedMs > 2500) {
+        pinMode(LEFT_LED_PIN, LOW);
+        pinMode(RIGHT_LED_PIN, LOW);
+        pinMode(MIDDLE_LED_PIN, LOW);
+       }
+      
   } else if (currentPattern == LeftBlinker) {
     // this is a 1000-ms-long cycle
     int16_t patternElapsedMs = (millis()-patternStartTime) % 1000;
@@ -110,6 +149,7 @@ void loop() {
     digitalWrite(MIDDLE_LED_PIN, LOW);
     digitalWrite(LEFT_LED_PIN, LOW);
   } else if (currentPattern == Bouncing) {
+    
     
   } else {
     Serial.println("ERROR - we haven't handled a pattern - this should be unreachable");
