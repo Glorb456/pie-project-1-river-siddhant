@@ -97,7 +97,7 @@ void loop() {
 
   //3000 ms long cycle
   else if (currentPattern == AllBlinking) {
-      int16_t patternElapsedMs = (millis()-patternStartTime) % 3000;
+      int16_t patternElapsedMs = (millis()-patternStartTime) % 1000;
 
 
       if (patternElapsedMs <= 500 && patternElapsedMs >= 0){
@@ -105,32 +105,11 @@ void loop() {
           analogWrite(RIGHT_LED_PIN, brightness);
           analogWrite(MIDDLE_LED_PIN, brightness);
         }
-      else if (patternElapsedMs <= 1000 && patternElapsedMs > 500){
-        analogWrite(LEFT_LED_PIN, LOW);
-        analogWrite(RIGHT_LED_PIN, LOW);
-        analogWrite(MIDDLE_LED_PIN, LOW);
-      }
-      else if (patternElapsedMs <= 1500 && patternElapsedMs > 1000) {
-        analogWrite(LEFT_LED_PIN, brightness);
-        analogWrite(RIGHT_LED_PIN, brightness);
-        analogWrite(MIDDLE_LED_PIN, brightness);
-       }
-      else if (patternElapsedMs <= 2000 && patternElapsedMs > 1500) {
-        analogWrite(LEFT_LED_PIN, LOW);
-        analogWrite(RIGHT_LED_PIN, LOW);
-        analogWrite(MIDDLE_LED_PIN, LOW);
-       }
-      else if (patternElapsedMs <= 2500 && patternElapsedMs > 2000){
-        analogWrite(LEFT_LED_PIN, brightness);
-        analogWrite(RIGHT_LED_PIN, brightness);
-        analogWrite(MIDDLE_LED_PIN, brightness);
-       }
       else {
         analogWrite(LEFT_LED_PIN, LOW);
         analogWrite(RIGHT_LED_PIN, LOW);
         analogWrite(MIDDLE_LED_PIN, LOW);
-       }
-      
+      }
   } else if (currentPattern == LeftBlinker) {
     // this is a 1000-ms-long cycle
     int16_t patternElapsedMs = (millis()-patternStartTime) % 1000;  
@@ -154,7 +133,7 @@ void loop() {
     analogWrite(MIDDLE_LED_PIN, 0);
     analogWrite(LEFT_LED_PIN, 0);
   } else if (currentPattern == Bouncing) {
-      int16_t patternElapsedMs = (millis()-patternStartTime) % 4000;
+      int16_t patternElapsedMs = (millis()-patternStartTime) % 1000;
       if (patternElapsedMs <= 250 && patternElapsedMs >= 0){
         analogWrite(LEFT_LED_PIN, brightness);
         analogWrite(MIDDLE_LED_PIN, 0);
@@ -170,72 +149,11 @@ void loop() {
         analogWrite(MIDDLE_LED_PIN, 0);
         analogWrite(RIGHT_LED_PIN, brightness);
       }
-      else if (patternElapsedMs <= 1000 && patternElapsedMs > 750){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, brightness);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 1250 && patternElapsedMs > 1000){
-        analogWrite(LEFT_LED_PIN, brightness);
-        analogWrite(MIDDLE_LED_PIN, 0);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 1500 && patternElapsedMs > 1250){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, brightness);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 1750 && patternElapsedMs > 1500){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, 0);
-        analogWrite(RIGHT_LED_PIN, brightness);
-      }
-      else if (patternElapsedMs <= 2000 && patternElapsedMs > 1750){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, brightness);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 2250 && patternElapsedMs > 2000){
-        analogWrite(LEFT_LED_PIN, brightness);
-        analogWrite(MIDDLE_LED_PIN, 0);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 2500 && patternElapsedMs > 2250){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, brightness);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 2750 && patternElapsedMs > 2500){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, 0);
-        analogWrite(RIGHT_LED_PIN, brightness);
-      }
-      else if (patternElapsedMs <= 3000 && patternElapsedMs > 2750){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, brightness);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 3250 && patternElapsedMs > 3000){
-        analogWrite(LEFT_LED_PIN, brightness);
-        analogWrite(MIDDLE_LED_PIN, 0);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 3500 && patternElapsedMs > 3250){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, brightness);
-        analogWrite(RIGHT_LED_PIN, 0);
-      }
-      else if (patternElapsedMs <= 3750 && patternElapsedMs > 3500){
-        analogWrite(LEFT_LED_PIN, 0);
-        analogWrite(MIDDLE_LED_PIN, 0);
-        analogWrite(RIGHT_LED_PIN, brightness);
-      }
       else {
         analogWrite(LEFT_LED_PIN, 0);
         analogWrite(MIDDLE_LED_PIN, brightness);
         analogWrite(RIGHT_LED_PIN, 0);
       }
-    
   } else {
     Serial.println("ERROR - we haven't handled a pattern - this should be unreachable");
   }
